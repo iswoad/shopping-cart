@@ -29,7 +29,7 @@
                            <input id="phone-count" type="text" class="form-control text-center" value="1">
                            <button onclick="handleProductChange('phone',true)" class="btn btn-default"><i class="fas fa-plus"></i></button>
                         </div>
-                        <h5 id="phone-total" >$1219</h5>
+                        <h5>$<span id="phone-total" >1219</span></h5>
                         <img src="images/remove.png" alt="" class="remove-item">
                      </div>
                   </div>
@@ -64,9 +64,9 @@
                      </div>
 
                      <div class="col-md-4 status">
-                        <h5>$1,278</h5>
-                        <h5>$0</h5>
-                        <h5>$1,278</h5>
+                        <h5>$<span id="sub-total">1,278</span></h5>
+                        <h5 id="tax-amount">$0</h5>
+                        <h5 id="grand-total">$1,278</h5>
                      </div>
                   </div>
                </div>
@@ -102,11 +102,36 @@
                   productTotal = productNewCount * 59;
                   
                }
-               // const productTotal = productNewCount * 59;
+
                document.getElementById(product +'-total').innerText = productTotal;
+               calculateTotal();
+       }
+
+            function calculateTotal(){
+               // const phoneInput = document.getElementById('phone-count');
+               // const phoneCount = parseInt(phoneInput.value);
+
+               // const caseInput = document.getElementById('case-count');
+               // const caseCount = parseInt(caseInput.value);
+               const caseCount = getInputValue('case');
+               const phoneCount = getInputValue('phone');
+
+               const subTotal = phoneCount * 1219 + caseCount * 59;
+               document.getElementById('sub-total').innerText = subTotal;
+
+               const tax = Math.round(subTotal * 0.1);
+               document.getElementById('tax-amount').innerText = '$' + tax;
+
+               const grandTotal = subTotal + tax;
+               document.getElementById('grand-total').innerText = '$' + grandTotal;
+
             }
 
-
+            function getInputValue(product){
+               const productInput = document.getElementById(product+'-count');
+               const productCount = parseInt(productInput.value);
+               return productCount;
+            }
 
 
                          //for phone count increase and decrease
